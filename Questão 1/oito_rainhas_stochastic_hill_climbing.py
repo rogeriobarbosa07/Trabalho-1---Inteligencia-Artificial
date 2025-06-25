@@ -1,21 +1,5 @@
 import random
 
-def print_board(board):
-    """
-    Imprime o tabuleiro das rainhas.
-    'Q' representa uma rainha e '.' representa uma casa vazia.
-    """
-    n = len(board)
-    for row in range(n):
-        line = ""
-        for col in range(n):
-            if board[row] == col:
-                line += "Q "
-            else:
-                line += ". "
-        print(line)
-    print()
-
 def random_board(n):
     """
     Gera uma configuração aleatória de tabuleiro para n rainhas.
@@ -66,9 +50,3 @@ def hill_climbing(n):
             return current
         current = best_neighbor
 
-if __name__ == "__main__":
-    n = 8
-    solution = hill_climbing(n)
-    print("Solução encontrada:")
-    print_board(solution)
-    print("Número de ataques:", count_attacks(solution))

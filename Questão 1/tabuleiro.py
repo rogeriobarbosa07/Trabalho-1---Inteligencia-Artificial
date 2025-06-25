@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
-import matplotlib.image as mpimg
 import numpy as np
 
 # Criando a matriz 8x8 alternando 0 e 1
@@ -26,4 +25,5 @@ for linha, coluna in enumerate(rainhas):
 ax.set_xticks([])
 ax.set_yticks([])
 
-plt.show()
+def gerar_tabuleiro():
+    plt.show()
