@@ -35,5 +35,3 @@ def hill_climbing_estocastico():
             return atual
         
         atual = random.choice(melhores)
-
-print(hill_climbing_estocastico())
