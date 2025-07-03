@@ -72,7 +72,21 @@ def cruzamento(pop):
     return filhos
 
 def mutacao(pop):
-    return
+    for i in range(len(pop)):
+        for j in range(8):
+            bin = pop[i][j][2:]
+            bin_3 = list(bin.zfill(3)) # garante 3 bits
+            for k in range(len(bin_3)):
+                flip = random.randint(1, 100)
+                if flip <= 3: # taxa de mutação: 3%
+                    if bin[k] == '0':
+                        bin[k] = '1'
+                    if bin[k] == '1':
+                        bin[k] = '0'
+            pop[i][j] = '0b' + ''.join(bin_3)
+    return pop
+
+
 
 '''
 PSEUDOCÓDIGO:
