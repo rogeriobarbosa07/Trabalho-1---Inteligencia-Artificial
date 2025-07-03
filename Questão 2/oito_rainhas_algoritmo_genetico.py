@@ -43,6 +43,7 @@ def selecao_dos_pais(pop):
     soma_fit = sum(fit_pop)
 
     pais = []
+    j = 0
     for _ in range(2):
         r = random.uniform(0, soma_fit)
         soma = 0
@@ -50,11 +51,15 @@ def selecao_dos_pais(pop):
             soma += fit
             if soma >= r:
                 pais.append(copy.deepcopy(dec_pop[i]))
+                for k in range(8):
+                    pais[j][k] = bin(pais[j][k])
+                j += 1
                 break
 
     return pais
 
-
+def cruzamento(pop):
+    return
 
 '''
 PSEUDOCÓDIGO:
