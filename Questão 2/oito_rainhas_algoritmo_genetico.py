@@ -1,22 +1,5 @@
 import random, copy
 
-def conta_ataques(posicoes):
-    ataques = 0
-    for i in range(8):
-        for j in range(i + 1, 8):
-            if posicoes[i] == posicoes[j] or abs(posicoes[i] - posicoes[j]) == abs(i - j):
-                ataques += 1
-    return ataques
-
-def melhores_vizinhos(posicoes, n):
-    melhores = []
-    for i in range(8):
-        posicoes_copia = copy.deepcopy(posicoes)
-        posicoes_copia[n] = i
-        if conta_ataques(posicoes_copia) < conta_ataques(posicoes):
-            melhores.append(i)
-    return melhores
-
 def inicializa_populacao():
     pop = []
     for i in range(20):
@@ -26,7 +9,16 @@ def inicializa_populacao():
         pop.append(pop_i)
     return pop
 
+def calcula_fitness(pop):
+    ataques = 0
+    for i in range(8):
+        for j in range(i + 1, 8):
+            if int(pop[i]) == int(pop[j]) or abs(int(pop[i]) - int(pop[j])) == abs(i - j):
+                ataques += 1
+    return ataques
+
 def selecao_dos_pais(pop):
+    corte = random.randint(1, 7)
 
     return
 
