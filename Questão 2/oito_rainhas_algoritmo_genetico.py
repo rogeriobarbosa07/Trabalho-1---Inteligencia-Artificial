@@ -1,6 +1,6 @@
 import random, copy
 
-def bin_para_dec(bin):
+def bin_para_dec(bin): # Função para modifcar a string binária para números em decimal
     bin = bin[2:]
     dec = 0
     j = 0
@@ -59,6 +59,19 @@ def selecao_dos_pais(pop):
     return pais
 
 def cruzamento(pop):
+    filhos = []
+    for _ in range(8): # taxa de cruzamento: 80%
+        pais = selecao_dos_pais(pop)
+        corte = random.randint(1, 7)
+
+        filho1 = pais[0][:corte] + pais[1][corte:]
+        filho2 = pais[0][corte:] + pais[1][:corte]
+
+        filhos.append(filho1)
+        filhos.append(filho2)
+    return filhos
+
+def mutacao(pop):
     return
 
 '''
