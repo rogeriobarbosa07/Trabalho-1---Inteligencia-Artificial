@@ -1,7 +1,6 @@
 import random, copy
 
 def bin_para_dec(bin): # Função para modifcar a string binária para números em decimal
-    bin = bin[2:]
     dec = 0
     j = 0
     for i in range(len(bin) - 1, -1, -1):
@@ -9,6 +8,12 @@ def bin_para_dec(bin): # Função para modifcar a string binária para números 
             dec += 2 ** i
         j += 1
     return dec
+
+def dec_para_bin(dec):
+    bin_ = bin(dec)[2:]
+    bin_3 = list(bin_.zfill(3)) # garante 3 bits
+    bin_3 = ''.join(bin_3)
+    return bin_3
 
 def inicializa_populacao():
     pop = []
@@ -19,26 +24,28 @@ def inicializa_populacao():
         pop.append(pop_i)
     return pop
 
-def calcula_fitness(ind):
-    ataques = 0
-    for i in range(8):
-        for j in range(i + 1, 8):
-            if ind[i] == ind[j] or abs(ind[i] - ind[j]) == abs(i - j):
-                ataques += 1
-    return ataques
-
-def selecao_dos_pais(pop):
+def calcula_fitness(pop):
     fit_pop = []
     dec_pop = []
 
-    # Converte e calcula o fitness dos indivíduos
     for ind in pop:
         for i in range(8):
             ind[i] = bin_para_dec(ind[i])
         dec_pop.append(ind)
+
+        ataques = 0
+        for j in range(i + 1, 8):
+            if ind[i] == ind[j] or abs(ind[i] - ind[j]) == abs(i - j):
+                ataques += 1
+
         ataques = calcula_fitness(ind)
         fit = 1/(1 + ataques)
         fit_pop.append(fit)
+    
+    return dec_pop, fit_pop
+
+def selecao_dos_pais(pop):
+    dec_pop, fit_pop = calcula_fitness(pop)    
 
     soma_fit = sum(fit_pop)
 
@@ -72,32 +79,25 @@ def cruzamento(pop):
         filhos.append(filho1)
         filhos.append(filho2)
 
-    for ind in filhos:
-        for i in range(8):
-            ind[i] = bin_para_dec(ind[i])
-        dec_filhos.append(ind)
-        ataques = calcula_fitness(ind)
-        fit = 1/(1 + ataques)
-        fit_filhos.append(fit)
+    _, fit_filhos = calcula_fitness(filhos)
 
     return filhos, fit_filhos
 
 def mutacao(pop):
     for i in range(len(pop)):
         for j in range(8):
-            bin = pop[i][j][2:]
-            bin_3 = list(bin.zfill(3)) # garante 3 bits
-            for k in range(len(bin_3)):
+            bin = pop[i][j]
+            for k in range(len(bin)):
                 flip = random.randint(1, 100)
                 if flip <= 3: # taxa de mutação: 3%
                     if bin[k] == '0':
                         bin[k] = '1'
                     if bin[k] == '1':
                         bin[k] = '0'
-            pop[i][j] = '0b' + ''.join(bin_3)
+            #pop[i][j] = 
     return pop
 
-def selecao_elitista(pop):
+def selecao_elitista(pop, fit_pop):
     return 
 
 '''
