@@ -31,15 +31,16 @@ def calcula_fitness(pop):
     fit_pop = []
     dec_pop = []
 
-    for ind in pop:
+    for ind in pop: # ERRO AQUI!
         for i in range(8):
             ind[i] = bin_para_dec(ind[i])
         dec_pop.append(ind)
 
         ataques = 0
-        for j in range(i + 1, 8):
-            if ind[i] == ind[j] or abs(ind[i] - ind[j]) == abs(i - j):
-                ataques += 1
+        for i in range(8):
+            for j in range(i + 1, 8):
+                if ind[i] == ind[j] or abs(ind[i] - ind[j]) == abs(i - j):
+                    ataques += 1
 
         fit = 1/(1 + ataques)
         fit_pop.append(fit)
