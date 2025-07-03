@@ -29,15 +29,32 @@ def calcula_fitness(ind):
 
 def selecao_dos_pais(pop):
     fit_pop = []
+    dec_pop = []
+
+    # Converte e calcula o fitness dos indivíduos
     for ind in pop:
         for i in range(8):
             ind[i] = bin_para_dec(ind[i])
-        fit_pop.append(calcula_fitness(ind))
-    
-    for i in range(4):
-        fit_pop.pop(max(fit_pop))    
+        dec_pop.append(ind)
+        ataques = calcula_fitness(ind)
+        fit = 1/(1 + ataques)
+        fit_pop.append(fit)
 
-    return fit_pop
+    soma_fit = sum(fit_pop)
+
+    pais = []
+    for _ in range(2):
+        r = random.uniform(0, soma_fit)
+        soma = 0
+        for i, fit in enumerate(fit_pop):
+            soma += fit
+            if soma >= r:
+                pais.append(copy.deepcopy(dec_pop[i]))
+                break
+
+    return pais
+
+
 
 '''
 PSEUDOCÓDIGO:
