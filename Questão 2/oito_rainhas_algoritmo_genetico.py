@@ -55,11 +55,13 @@ def selecao_dos_pais(pop):
                     pais[j][k] = bin(pais[j][k])
                 j += 1
                 break
-
     return pais
 
 def cruzamento(pop):
     filhos = []
+    fit_filhos = []
+    dec_filhos = []
+
     for _ in range(8): # taxa de cruzamento: 80%
         pais = selecao_dos_pais(pop)
         corte = random.randint(1, 7)
@@ -69,7 +71,16 @@ def cruzamento(pop):
 
         filhos.append(filho1)
         filhos.append(filho2)
-    return filhos
+
+    for ind in filhos:
+        for i in range(8):
+            ind[i] = bin_para_dec(ind[i])
+        dec_filhos.append(ind)
+        ataques = calcula_fitness(ind)
+        fit = 1/(1 + ataques)
+        fit_filhos.append(fit)
+
+    return filhos, fit_filhos
 
 def mutacao(pop):
     for i in range(len(pop)):
@@ -86,7 +97,8 @@ def mutacao(pop):
             pop[i][j] = '0b' + ''.join(bin_3)
     return pop
 
-
+def selecao_elitista(pop):
+    return 
 
 '''
 PSEUDOCÓDIGO:
