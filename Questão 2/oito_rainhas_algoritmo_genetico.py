@@ -20,7 +20,7 @@ def inicializa_populacao():
     for i in range(20):
         pop_i = []
         for j in range(8):
-            pop_i.append(bin(random.randint(0, 7)))
+            pop_i.append(dec_para_bin(random.randint(0, 7)))
         pop.append(pop_i)
     return pop
 
@@ -44,6 +44,9 @@ def calcula_fitness(pop):
     
     return dec_pop, fit_pop
 
+p = inicializa_populacao()
+print(calcula_fitness(p))
+
 def selecao_dos_pais(pop):
     dec_pop, fit_pop = calcula_fitness(pop)    
 
@@ -59,7 +62,7 @@ def selecao_dos_pais(pop):
             if soma >= r:
                 pais.append(copy.deepcopy(dec_pop[i]))
                 for k in range(8):
-                    pais[j][k] = bin(pais[j][k])
+                    pais[j][k] = dec_para_bin(pais[j][k])
                 j += 1
                 break
     return pais
@@ -67,7 +70,6 @@ def selecao_dos_pais(pop):
 def cruzamento(pop):
     filhos = []
     fit_filhos = []
-    dec_filhos = []
 
     for _ in range(8): # taxa de cruzamento: 80%
         pais = selecao_dos_pais(pop)
@@ -94,11 +96,16 @@ def mutacao(pop):
                         bin[k] = '1'
                     if bin[k] == '1':
                         bin[k] = '0'
-            #pop[i][j] = 
+            pop[i][j] = ''.join(bin)
     return pop
 
 def selecao_elitista(pop, fit_pop):
-    return 
+
+    return
+
+def algoritmo_genetico():
+    pop = inicializa_populacao() 
+    fit_pop = calcula_fitness(pop)
 
 '''
 PSEUDOCÓDIGO:
