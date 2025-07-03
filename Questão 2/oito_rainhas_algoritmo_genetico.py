@@ -1,5 +1,6 @@
 import random, copy
 
+# Conversões de bases
 def bin_para_dec(bin): # Função para modifcar a string binária para números em decimal
     dec = 0
     j = 0
@@ -15,6 +16,7 @@ def dec_para_bin(dec):
     bin_3 = ''.join(bin_3)
     return bin_3
 
+# Gera uma população inicial aleatória
 def inicializa_populacao():
     pop = []
     for i in range(20):
@@ -24,6 +26,7 @@ def inicializa_populacao():
         pop.append(pop_i)
     return pop
 
+# FUNÇÃO QUE RETORNA O FITNESS!
 def calcula_fitness(pop):
     fit_pop = []
     dec_pop = []
@@ -38,18 +41,22 @@ def calcula_fitness(pop):
             if ind[i] == ind[j] or abs(ind[i] - ind[j]) == abs(i - j):
                 ataques += 1
 
-        ataques = calcula_fitness(ind)
         fit = 1/(1 + ataques)
         fit_pop.append(fit)
     
-    return dec_pop, fit_pop
+    return fit_pop
 
 p = inicializa_populacao()
 print(calcula_fitness(p))
 
 def selecao_dos_pais(pop):
-    dec_pop, fit_pop = calcula_fitness(pop)    
+    dec_pop = []
+    for ind in pop:
+        for i in range(8):
+            ind[i] = bin_para_dec(ind[i])
+        dec_pop.append(ind)
 
+    fit_pop = calcula_fitness(pop)
     soma_fit = sum(fit_pop)
 
     pais = []
@@ -81,7 +88,7 @@ def cruzamento(pop):
         filhos.append(filho1)
         filhos.append(filho2)
 
-    _, fit_filhos = calcula_fitness(filhos)
+    fit_filhos = calcula_fitness(filhos)
 
     return filhos, fit_filhos
 
