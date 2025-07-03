@@ -23,14 +23,16 @@ def calcula_fitness(ind):
     ataques = 0
     for i in range(8):
         for j in range(i + 1, 8):
-            if int(ind[i]) == int(ind[j]) or abs(int(ind[i]) - int(ind[j])) == abs(i - j):
+            if ind[i] == ind[j] or abs(ind[i] - ind[j]) == abs(i - j):
                 ataques += 1
     return ataques
 
 def selecao_dos_pais(pop):
     fit_pop = []
     for ind in pop:
-        fit_pop.append(calcula_fitness(int(ind)))
+        for i in range(8):
+            ind[i] = bin_para_dec(ind[i])
+        fit_pop.append(calcula_fitness(ind))
     
     for i in range(4):
         fit_pop.pop(max(fit_pop))    
