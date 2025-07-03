@@ -1,5 +1,15 @@
 import random, copy
 
+def bin_para_dec(bin):
+    bin = bin[2:]
+    dec = 0
+    j = 0
+    for i in range(len(bin) - 1, -1, -1):
+        if bin[j] == '1':
+            dec += 2 ** i
+        j += 1
+    return dec
+
 def inicializa_populacao():
     pop = []
     for i in range(20):
@@ -9,18 +19,23 @@ def inicializa_populacao():
         pop.append(pop_i)
     return pop
 
-def calcula_fitness(pop):
+def calcula_fitness(ind):
     ataques = 0
     for i in range(8):
         for j in range(i + 1, 8):
-            if int(pop[i]) == int(pop[j]) or abs(int(pop[i]) - int(pop[j])) == abs(i - j):
+            if int(ind[i]) == int(ind[j]) or abs(int(ind[i]) - int(ind[j])) == abs(i - j):
                 ataques += 1
     return ataques
 
 def selecao_dos_pais(pop):
-    corte = random.randint(1, 7)
+    fit_pop = []
+    for ind in pop:
+        fit_pop.append(calcula_fitness(int(ind)))
+    
+    for i in range(4):
+        fit_pop.pop(max(fit_pop))    
 
-    return
+    return fit_pop
 
 '''
 PSEUDOCÓDIGO:
