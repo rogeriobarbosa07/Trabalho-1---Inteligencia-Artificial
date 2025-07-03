@@ -1,5 +1,14 @@
 import random
 
+def inicializa_populacao():
+    pop = []
+    for i in range(20):
+        pop_i = []
+        for j in range(8):
+            pop_i.append(random.randint(0, 7))
+        pop.append(pop_i)
+    return pop
+
 '''
 PSEUDOCÓDIGO:
 
