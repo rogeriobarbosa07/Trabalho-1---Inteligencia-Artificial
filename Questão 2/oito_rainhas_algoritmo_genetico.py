@@ -43,7 +43,7 @@ def calcula_fitness(pop):
                 if ind[i] == ind[j] or abs(ind[i] - ind[j]) == abs(i - j):
                     ataques += 1
 
-        fit = 1/(1 + ataques)
+        fit = 1/(1 + ataques) # melhor fitness: 1
         fit_pop.append(fit)
     
     return fit_pop
@@ -108,13 +108,38 @@ def mutacao(pop):
             pop_copia[i][j] = ''.join(bin)
     return pop_copia
 
+# Seleciona os indivíduos mais adaptados (com base no fitness)
 def selecao_elitista(pop, fit_pop):
+    pop_copia = copy.deepcopy(pop)
+    fit_pop_copia = copy.deepcopy(fit_pop)
 
-    return
+    for i in range(8):
+        pos_menor = 0
+        for j in range(19):
+            if fit_pop[j] > fit_pop[j + 1]:
+                pos_menor = j + 1
+        pop_copia.pop(pos_menor)
+        fit_pop_copia.pop(pos_menor)
 
+    return pop_copia, fit_pop
+
+# Execução do algoritmo!
 def algoritmo_genetico():
     pop = inicializa_populacao() 
     fit_pop = calcula_fitness(pop)
+    for i in range(1000):
+        if 1 in fit_pop:
+            pos_ideal = fit_pop.index(1)
+            print("Indivíduo ideal: ", pop[pos_ideal])
+            break
+        
+        pop_mais = pop + cruzamento(pop, fit_pop)
+        pop_mut = mutacao(pop_mais)
+        fit_mut = calcula_fitness(pop_mut)
+        pop, fit_pop = selecao_elitista(pop_mut, fit_mut)
+
+if __name__ == '__main__':
+    algoritmo_genetico()
 
 '''
 PSEUDOCÓDIGO:
