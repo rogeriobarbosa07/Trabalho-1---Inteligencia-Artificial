@@ -53,7 +53,7 @@ def selecao_dos_pais(pop, fit_pop):
     pop_copia = copy.deepcopy(pop)
 
     dec_pop = []
-    for ind in pop:
+    for ind in pop_copia:
         for i in range(8):
             ind[i] = bin_para_dec(ind[i])
         dec_pop.append(ind)
@@ -73,15 +73,15 @@ def selecao_dos_pais(pop, fit_pop):
                     pais[j][k] = dec_para_bin(pais[j][k])
                 j += 1
                 break
-            
+
     return pais
 
-def cruzamento(pop):
+# função do cruzamento: utiliza a estratégia do ponto de corte
+def cruzamento(pop, fit_pop):
     filhos = []
-    fit_filhos = []
 
     for _ in range(8): # taxa de cruzamento: 80%
-        pais = selecao_dos_pais(pop)
+        pais = selecao_dos_pais(pop, fit_pop)
         corte = random.randint(1, 7)
 
         filho1 = pais[0][:corte] + pais[1][corte:]
@@ -90,9 +90,7 @@ def cruzamento(pop):
         filhos.append(filho1)
         filhos.append(filho2)
 
-    fit_filhos = calcula_fitness(filhos)
-
-    return filhos, fit_filhos
+    return filhos
 
 def mutacao(pop):
     pop_copia = copy.deepcopy(pop)
