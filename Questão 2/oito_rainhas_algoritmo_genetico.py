@@ -28,10 +28,11 @@ def inicializa_populacao():
 
 # FUNÇÃO QUE RETORNA O FITNESS!
 def calcula_fitness(pop):
+    pop_copia = copy.deepcopy(pop)
     fit_pop = []
     dec_pop = []
 
-    for ind in pop: # ERRO AQUI!
+    for ind in pop_copia:
         for i in range(8):
             ind[i] = bin_para_dec(ind[i])
         dec_pop.append(ind)
@@ -47,17 +48,16 @@ def calcula_fitness(pop):
     
     return fit_pop
 
-p = inicializa_populacao()
-print(calcula_fitness(p))
+# Seleciona os pais (com base na roleta)
+def selecao_dos_pais(pop, fit_pop):
+    pop_copia = copy.deepcopy(pop)
 
-def selecao_dos_pais(pop):
     dec_pop = []
     for ind in pop:
         for i in range(8):
             ind[i] = bin_para_dec(ind[i])
         dec_pop.append(ind)
 
-    fit_pop = calcula_fitness(pop)
     soma_fit = sum(fit_pop)
 
     pais = []
@@ -73,6 +73,7 @@ def selecao_dos_pais(pop):
                     pais[j][k] = dec_para_bin(pais[j][k])
                 j += 1
                 break
+            
     return pais
 
 def cruzamento(pop):
@@ -94,6 +95,7 @@ def cruzamento(pop):
     return filhos, fit_filhos
 
 def mutacao(pop):
+    pop_copia = copy.deepcopy(pop)
     for i in range(len(pop)):
         for j in range(8):
             bin = pop[i][j]
@@ -104,8 +106,8 @@ def mutacao(pop):
                         bin[k] = '1'
                     if bin[k] == '1':
                         bin[k] = '0'
-            pop[i][j] = ''.join(bin)
-    return pop
+            pop_copia[i][j] = ''.join(bin)
+    return pop_copia
 
 def selecao_elitista(pop, fit_pop):
 
