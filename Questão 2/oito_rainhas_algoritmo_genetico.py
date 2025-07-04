@@ -76,7 +76,7 @@ def selecao_dos_pais(pop, fit_pop):
 
     return pais
 
-# função do cruzamento: utiliza a estratégia do ponto de corte
+# Função do cruzamento: utiliza a estratégia do ponto de corte
 def cruzamento(pop, fit_pop):
     filhos = []
 
@@ -92,11 +92,12 @@ def cruzamento(pop, fit_pop):
 
     return filhos
 
+# Função de mutação: utiliza a estratégia do bitflip
 def mutacao(pop):
     pop_copia = copy.deepcopy(pop)
-    for i in range(len(pop)):
+    for i in range(len(pop_copia)):
         for j in range(8):
-            bin = pop[i][j]
+            bin = list(pop_copia[i][j])
             for k in range(len(bin)):
                 flip = random.randint(1, 100)
                 if flip <= 3: # taxa de mutação: 3%
