@@ -118,7 +118,7 @@ def selecao_elitista(pop, fit_pop):
     for i in range(16):
         pos_menor = 0
         for j in range(len(pop_copia) - 1):
-            if fit_pop[pos_menor] > fit_pop[j + 1]:
+            if fit_pop_copia[pos_menor] > fit_pop_copia[j + 1]:
                 pos_menor = j + 1
         pop_copia.pop(pos_menor)
         fit_pop_copia.pop(pos_menor)
