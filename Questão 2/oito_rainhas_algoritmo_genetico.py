@@ -1,3 +1,5 @@
+# Obs: verificar se todos os critérios estão sendo bem atendidos!
+
 import random, copy
 
 # Conversões de bases
@@ -113,15 +115,15 @@ def selecao_elitista(pop, fit_pop):
     pop_copia = copy.deepcopy(pop)
     fit_pop_copia = copy.deepcopy(fit_pop)
 
-    for i in range(8):
+    for i in range(16):
         pos_menor = 0
-        for j in range(19):
-            if fit_pop[j] > fit_pop[j + 1]:
+        for j in range(len(pop_copia) - 1):
+            if fit_pop[pos_menor] > fit_pop[j + 1]:
                 pos_menor = j + 1
         pop_copia.pop(pos_menor)
         fit_pop_copia.pop(pos_menor)
 
-    return pop_copia, fit_pop
+    return pop_copia, fit_pop_copia
 
 # Execução do algoritmo!
 def algoritmo_genetico():
