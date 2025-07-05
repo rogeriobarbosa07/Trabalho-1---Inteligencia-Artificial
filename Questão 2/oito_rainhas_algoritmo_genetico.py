@@ -129,16 +129,27 @@ def selecao_elitista(pop, fit_pop):
 def algoritmo_genetico():
     pop = inicializa_populacao() 
     fit_pop = calcula_fitness(pop)
+
     for i in range(1000):
         if 1 in fit_pop:
             pos_ideal = fit_pop.index(1)
             print("Indivíduo ideal: ", pop[pos_ideal])
             break
         
-        pop_mais = pop + cruzamento(pop, fit_pop)
-        pop_mut = mutacao(pop_mais)
-        fit_mut = calcula_fitness(pop_mut)
-        pop, fit_pop = selecao_elitista(pop_mut, fit_mut)
+        # Após o cruzamento, retorna os filhos
+        filhos = cruzamento(pop, fit_pop)
+
+        # faz a mutação dos filhos e calcula o fitness deles
+        filhos_mut = mutacao(filhos)
+        fit_mut = calcula_fitness(filhos_mut)
+
+        # População total: população anterior + filhos após a mutação
+        # Fitness total: fitness da população anterior + fitness dos filhos após a mutação
+        pop = pop + filhos_mut
+        fit_pop = fit_pop + fit_mut
+
+        # faz a seleção dos melhores (os que tem o fitness mais próximo de 1)
+        pop, fit_pop = selecao_elitista(pop, fit_pop)
 
 if __name__ == '__main__':
     algoritmo_genetico()
