@@ -130,11 +130,10 @@ def algoritmo_genetico():
     pop = inicializa_populacao() 
     fit_pop = calcula_fitness(pop)
 
-    for i in range(1000):
+    for _ in range(1000):
         if 1 in fit_pop:
-            pos_ideal = fit_pop.index(1)
-            print("Indivíduo ideal: ", pop[pos_ideal])
-            break
+            pos_melhor = fit_pop.index(1)
+            return pop[pos_melhor]
         
         # Após o cruzamento, retorna os filhos
         filhos = cruzamento(pop, fit_pop)
@@ -150,9 +149,21 @@ def algoritmo_genetico():
 
         # faz a seleção dos melhores (os que tem o fitness mais próximo de 1)
         pop, fit_pop = selecao_elitista(pop, fit_pop)
+    return None
 
 if __name__ == '__main__':
-    algoritmo_genetico()
+    melhores_distintas = []
+    for _ in range(50): # Executando o algoritmo 50 vezes
+        melhor_atual = algoritmo_genetico()
+        if melhor_atual not in melhores_distintas:
+            melhores_distintas.append(melhor_atual)
+        if None in melhores_distintas:
+            melhores_distintas.remove(None)
+        if len(melhores_distintas) == 5:
+            break
+    print("Melhores indivíduos encontrados:")
+    for i in range(len(melhores_distintas)):
+        print(f"Indivíduo {i + 1}: {melhores_distintas[i]}")        
 
 '''
 PSEUDOCÓDIGO:
